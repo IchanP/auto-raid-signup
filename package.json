@@ -1,0 +1,21 @@
+{
+  "name": "auto-signup",
+  "version": "1.0.0",
+  "description": ">",
+  "main": "main.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IchanP/auto-raid-signup.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/IchanP/auto-raid-signup/issues"
+  },
+  "homepage": "https://github.com/IchanP/auto-raid-signup#readme",
+  "devDependencies": {
+    "@lnu/eslint-config": "^1.1.10",
+    "eslint": "^8.48.0"
+  }
+}
