@@ -1,0 +1,20 @@
+{
+  "name": "Auto Sign",
+  "description": "Auto Raid Signup through Discord",
+  "version": "0.0.1",
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "./popup/popup.html"
+  },
+  "permissions": [
+    "alarms",
+    "tabs",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://myanimelist.net/"
+  ]
+}
