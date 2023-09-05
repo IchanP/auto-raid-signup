@@ -8,15 +8,14 @@
     <script src="./popup.js" type="module"></script>
   </head>
   <body>
-    <template id="li_template">
-      <li>
-        <a>
-          <h3 class="title">Tab Title</h3>
-          <p class="pathname">Tab Pathname</p>
-        </a>
-      </li>
-    </template>
     <h1>Hello Nuts</h1>
-    <ul></ul>
+    <form id="settingsForm">
+      <label for="discordLink">Discord Channel Link</label>
+      <input type="text" name="discordLink" placeholder="Link to discord channel here" id="discordLink">
+      <br>
+      <label for="classSelection">Put your class name here</label>
+      <input type="text" name="classSelection" id="classSelection">
+      <input type="submit">
+    </form>
   </body>
 </html>
