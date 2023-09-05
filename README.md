@@ -10,6 +10,7 @@
 - Grab settings into main
 - Make sure the alarm is persistent
 - Need a check to make sure that settings are saved before attempting sign-up
+- Needs to remember if message has been reacted to already
 
 ### Settings required
 
