@@ -1,0 +1,58 @@
+    body {
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    ul {
+      list-style-type: none;
+      padding-inline-start: 0;
+      margin: 1rem 0;
+    }
+
+    li {
+      padding: 0.25rem;
+    }
+
+    li:nth-child(odd) {
+      background: #80808030;
+    }
+
+    li:nth-child(even) {
+      background: #ffffff;
+    }
+
+    h3,
+    p {
+      margin: 0;
+    }
+
+    form {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+    }
+
+    .gridItem {
+      /* Style your grid items here */
+      padding: 10px;
+      text-align: center;
+    }
+
+    #emoteWrapper {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    #classSelectWrapper {
+     position: relative;
+    }
+    #classSelectWrapper>button {
+      position: absolute;
+      bottom: 5%;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    .wowClassInput {
+      width: 50%;
+    }

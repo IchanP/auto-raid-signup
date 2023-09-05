@@ -46,7 +46,7 @@ async function justTestingFromMain (message) {
  *
  */
 const extensionIconClickListener = () => {
-  chrome.tabs.create({ url: './popup/popup.html' })
+  chrome.tabs.create({ url: './settingsPage/settings.html' })
 }
 
 chrome.action.onClicked.addListener(extensionIconClickListener)
