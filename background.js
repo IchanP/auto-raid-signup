@@ -1,7 +1,10 @@
 /* eslint-disable no-undef */
+const retailClasses = ['Warrior', 'Paladin', 'Hunter', 'Rogue', 'Priest', 'Shaman', 'Mage', 'Warlock', 'Monk', 'Druid', 'Demon Hunter', 'Death Knight', 'Evoker']
 const navigateToUrl = 'https://myanimelist.net/profile/Oskz'
 let createdTab
 importScripts('main.js')
+
+console.log(retailClasses)
 
 chrome.alarms.create('testing-again', {
   when: Date.now() + 5000

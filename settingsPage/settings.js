@@ -10,7 +10,7 @@ discordLinkElement.value = savedLink.discordChannel
 const savedClass = await chrome.storage.local.get(['selectedClass']).then(result => result)
 classSelector.value = savedClass.selectedClass
 
-const retailClasses = ['Warrior', 'Paladin', 'Hunter', 'Rogue', 'Priest', 'Shaman', 'Mage', 'Warlock', 'Monk', 'Druid', 'Demon Hunter', 'Death Knight', 'Evoker']
+export const retailClasses = ['Warrior', 'Paladin', 'Hunter', 'Rogue', 'Priest', 'Shaman', 'Mage', 'Warlock', 'Monk', 'Druid', 'Demon Hunter', 'Death Knight', 'Evoker']
 
 const savedClassEmotes = await getSavedEmotes()
 
@@ -30,7 +30,6 @@ retailClasses.forEach((wowClass) => {
   // Re-add the saved settings to the input value
   for (const savedEmote of savedClassEmotes) {
     const emoteClassName = Object.keys(savedEmote)[0]
-    console.log(emoteClassName)
     if (emoteClassName === wowClass) {
       classInput.value = savedEmote[emoteClassName]
     }
