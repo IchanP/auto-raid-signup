@@ -2,8 +2,18 @@ const classSelector = document.querySelector('#classSelection')
 const discordLinkElement = document.querySelector('#discordLink')
 const optionsForm = document.querySelector('form')
 
+// Grab link from storage and append as text
+const savedLink = await chrome.storage.local.get(['discordChannel']).then((result) => result)
+discordLinkElement.value = savedLink.discordChannel
+
+// Now for selected class
+const savedClass = await chrome.storage.local.get(['selectedClass']).then(result => result)
+classSelector.value = savedClass.selectedClass
+
 const retailClasses = ['Warrior', 'Paladin', 'Hunter', 'Rogue', 'Priest', 'Shaman', 'Mage', 'Warlock', 'Monk', 'Druid', 'Demon Hunter', 'Death Knight', 'Evoker']
 
+const savedClassEmotes = await getSavedEmotes()
+console.log(savedClassEmotes)
 const emoteWrapper = document.getElementById('emoteWrapper')
 
 // Simply add input field for each class to the DOM.
@@ -16,6 +26,7 @@ retailClasses.forEach((wowClass) => {
   classInput.setAttribute('name', wowClass)
   classInput.setAttribute('id', wowClass)
   classInput.setAttribute('class', 'wowClassInput')
+  classInput.setAttribute('autocomplete', 'off')
   emoteWrapper.append(classLabel, classInput)
 })
 
@@ -39,3 +50,18 @@ optionsForm.addEventListener('submit', (event) => {
     chrome.storage.local.set(storageObject)
   }
 })
+
+/**
+ * Gets the saved emote values from storage.
+ *
+ * @returns {Array[Object]} - Returns the emotes as key value pairs in an array.
+ */
+async function getSavedEmotes () {
+  const savedEmotes = await Promise.all(
+    retailClasses.map(async (retailClass) => {
+      const emotePair = await chrome.storage.local.get([retailClass])
+      return emotePair
+    })
+  )
+  return savedEmotes
+}
