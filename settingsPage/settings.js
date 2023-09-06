@@ -6,6 +6,7 @@ const retailClasses = ['Warrior', 'Paladin', 'Hunter', 'Rogue', 'Priest', 'Shama
 
 const emoteWrapper = document.getElementById('emoteWrapper')
 
+// Simply add input field for each class to the DOM.
 retailClasses.forEach((wowClass) => {
   const classLabel = document.createElement('label')
   classLabel.setAttribute('for', wowClass)
@@ -21,12 +22,20 @@ retailClasses.forEach((wowClass) => {
 optionsForm.addEventListener('submit', (event) => {
   event.preventDefault()
 
-  console.log(classSelector.value)
-  console.log(discordLinkElement.value)
   const classEmoteNames = document.getElementsByClassName('wowClassInput')
-  console.log(classEmoteNames)
 
+  // Set storage for discord link, selected class and the emotes on the server
   chrome.storage.local.set({
-    selectedClass: classSelector.value
+    selectedClass: classSelector.value ? classSelector.value : null
   })
+  chrome.storage.local.set({
+    discordChannel: discordLinkElement.value ? discordLinkElement.value : null
+  })
+
+  for (const inputElement of classEmoteNames) {
+    const nameOfClass = inputElement.getAttribute('id')
+    const storageObject = {}
+    storageObject[nameOfClass] = inputElement.value
+    chrome.storage.local.set(storageObject)
+  }
 })

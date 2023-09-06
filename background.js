@@ -14,6 +14,14 @@ chrome.alarms.onAlarm.addListener(function (alarm) {
     console.log('Background.js: This is your selected class: ')
     console.log(result)
   })
+  chrome.storage.local.get(['discordChannel']).then((result) => {
+    console.log('Background.js: This is the set link: ')
+    console.log(result)
+  })
+  chrome.storage.local.get(['Demon Hunter']).then((result) => {
+    console.log('Background.js: This is DH:')
+    console.log(result)
+  })
   chrome.alarms.create('testing-again', {
     when: Date.now() + 1500000
   })
@@ -45,7 +53,7 @@ async function justTestingFromMain (message) {
 }
 
 /**
- *
+ * Redirects the user to the settings page when the user clicks the plugin icon.
  */
 const extensionIconClickListener = () => {
   chrome.tabs.create({ url: './settingsPage/settings.html' })
