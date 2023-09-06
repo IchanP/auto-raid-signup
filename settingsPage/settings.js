@@ -13,7 +13,7 @@ classSelector.value = savedClass.selectedClass
 const retailClasses = ['Warrior', 'Paladin', 'Hunter', 'Rogue', 'Priest', 'Shaman', 'Mage', 'Warlock', 'Monk', 'Druid', 'Demon Hunter', 'Death Knight', 'Evoker']
 
 const savedClassEmotes = await getSavedEmotes()
-console.log(savedClassEmotes)
+
 const emoteWrapper = document.getElementById('emoteWrapper')
 
 // Simply add input field for each class to the DOM.
@@ -27,6 +27,15 @@ retailClasses.forEach((wowClass) => {
   classInput.setAttribute('id', wowClass)
   classInput.setAttribute('class', 'wowClassInput')
   classInput.setAttribute('autocomplete', 'off')
+  // Re-add the saved settings to the input value
+  for (const savedEmote of savedClassEmotes) {
+    const emoteClassName = Object.keys(savedEmote)[0]
+    console.log(emoteClassName)
+    if (emoteClassName === wowClass) {
+      classInput.value = savedEmote[emoteClassName]
+    }
+  }
+
   emoteWrapper.append(classLabel, classInput)
 })
 
