@@ -10,7 +10,10 @@ chrome.alarms.create('testing-again', {
 initialize()
 
 chrome.alarms.onAlarm.addListener(function (alarm) {
-  console.log(Date.now() + alarm.name)
+  chrome.storage.local.get(['selectedClass']).then((result) => {
+    console.log('Background.js: This is your selected class: ')
+    console.log(result)
+  })
   chrome.alarms.create('testing-again', {
     when: Date.now() + 1500000
   })
@@ -40,7 +43,6 @@ async function justTestingFromMain (message) {
   }
   )
 }
-
 
 /**
  *

@@ -21,9 +21,12 @@ retailClasses.forEach((wowClass) => {
 optionsForm.addEventListener('submit', (event) => {
   event.preventDefault()
 
-  // TODO write to storage
   console.log(classSelector.value)
   console.log(discordLinkElement.value)
   const classEmoteNames = document.getElementsByClassName('wowClassInput')
   console.log(classEmoteNames)
+
+  chrome.storage.local.set({
+    selectedClass: classSelector.value
+  })
 })
