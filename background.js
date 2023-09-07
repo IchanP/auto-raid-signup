@@ -1,6 +1,5 @@
 /* eslint-disable no-undef */
 const retailClasses = ['Warrior', 'Paladin', 'Hunter', 'Rogue', 'Priest', 'Shaman', 'Mage', 'Warlock', 'Monk', 'Druid', 'Demon Hunter', 'Death Knight', 'Evoker']
-const navigateToUrl = 'https://myanimelist.net/profile/Oskz'
 let createdTab
 
 console.log(retailClasses)
@@ -28,7 +27,12 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
     if (retailClasses.find((className) => className === selectedClass)) {
       emoteName = await getFirstFieldFromStorage(selectedClass)
     }
-    console.log(emoteName)
+    if (emoteName !== '') {
+      createdTab = await chrome.tabs.create({
+        active: false,
+        url: discordLink
+      })
+    }
   }
 })
 
@@ -46,7 +50,7 @@ const getFirstFieldFromStorage = async (key) => {
   return Object.values(keyValuePair)[0]
 }
 
-chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+/* chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
   console.log(changeInfo.url)
   // TODO Add try catch or modify logic
   if (tabId === createdTab.id && changeInfo.url) {
@@ -57,6 +61,13 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
 
       }
     )
+  }
+}) */
+
+chrome.webNavigation.onCompleted.addListener(async (details) => {
+  if (createdTab && details.tabId === createdTab.id) {
+    console.log(details.tabId)
+    console.log(details.url)
   }
 })
 
