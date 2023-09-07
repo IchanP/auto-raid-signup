@@ -20,14 +20,13 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
   if (alarm.name === 'check-again-tomorrow' || alarm.name === 'updated-settings') {
     // TODO generalzie the grabbinof these things
     const selectedClass = await getFirstFieldFromStorage('selectedClass')
-    console.log(selectedClass)
     const discordLink = await getFirstFieldFromStorage('discordChannel')
-    console.log(discordLink)
     let emoteName
     if (retailClasses.find((className) => className === selectedClass)) {
       emoteName = await getFirstFieldFromStorage(selectedClass)
     }
-    if (emoteName !== '') {
+    // Make sure we're trying to navigate to a discord link
+    if (emoteName !== '' && discordLink.includes('discord.com/channels/')) {
       createdTab = await chrome.tabs.create({
         active: false,
         url: discordLink
@@ -66,8 +65,8 @@ const getFirstFieldFromStorage = async (key) => {
 
 chrome.webNavigation.onCompleted.addListener(async (details) => {
   if (createdTab && details.tabId === createdTab.id) {
-    console.log(details.tabId)
-    console.log(details.url)
+    // Immediately reset the createdTab so the listener is not triggered again
+    createdTab = null
   }
 })
 
