@@ -20,27 +20,31 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
   // If statement runs the script if alarm should trigger it
   if (alarm.name === 'check-again-tomorrow' || alarm.name === 'updated-settings') {
     // TODO generalzie the grabbinof these things
-    const selectedClass = await chrome.storage.local.get(['selectedClass']).then((selectedClass) => {
-      console.log('Background.js: This is your selected class: ')
-      console.log(selectedClass.selectedClass)
-      return selectedClass.selectedClass
-    })
-    const discordLink = await chrome.storage.local.get(['discordChannel']).then((discordLink) => {
-      console.log('Background.js: This is the set link: ')
-      console.log(discordLink)
-      return discordLink
-    })
+    const selectedClass = await getFirstFieldFromStorage('selectedClass')
+    console.log(selectedClass)
+    const discordLink = await getFirstFieldFromStorage('discordChannel')
+    console.log(discordLink)
     let emoteName
     if (retailClasses.find((className) => className === selectedClass)) {
-      emoteName = await chrome.storage.local.get([selectedClass]).then((demonHunter) => {
-        console.log('Background.js: This is selected class:')
-        console.log(demonHunter)
-        return demonHunter
-      })
+      emoteName = await getFirstFieldFromStorage(selectedClass)
     }
     console.log(emoteName)
   }
 })
+
+/**
+ * Grabs the selected key value pair from storage.
+ *
+ * @param {string} key - The name of the key you wish to get.
+ * @returns {Promise[string]} - Returns the first field value from key value pair.
+ */
+const getFirstFieldFromStorage = async (key) => {
+  const keyValuePair = await chrome.storage.local.get([key]).then((keyValuePair) => {
+    console.log(`Background.js: Getting ${key} from storage: `)
+    return keyValuePair
+  })
+  return Object.values(keyValuePair)[0]
+}
 
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
   console.log(changeInfo.url)
