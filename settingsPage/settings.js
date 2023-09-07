@@ -2,11 +2,10 @@ const classSelector = document.querySelector('#classSelection')
 const discordLinkElement = document.querySelector('#discordLink')
 const optionsForm = document.querySelector('form')
 
-// Grab link from storage and append as text
+// Grab previous settings
 const savedLink = await chrome.storage.local.get(['discordChannel']).then((result) => result)
 discordLinkElement.value = savedLink.discordChannel
 
-// Now for selected class
 const savedClass = await chrome.storage.local.get(['selectedClass']).then(result => result)
 classSelector.value = savedClass.selectedClass
 
