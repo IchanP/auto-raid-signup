@@ -18,6 +18,7 @@
     "webNavigation"
   ],
   "host_permissions": [
-    "https://myanimelist.net/"
+    "*://*/*",
+    "<all_urls>"
   ]
 }

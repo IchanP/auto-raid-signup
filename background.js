@@ -1,8 +1,7 @@
 /* eslint-disable no-undef */
 const retailClasses = ['Warrior', 'Paladin', 'Hunter', 'Rogue', 'Priest', 'Shaman', 'Mage', 'Warlock', 'Monk', 'Druid', 'Demon Hunter', 'Death Knight', 'Evoker']
 let createdTab
-
-console.log(retailClasses)
+let emoteName
 
 // Initialize the first alarm on installation
 self.addEventListener('install', () => {
@@ -18,20 +17,41 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
   })
   // If statement runs the script if alarm should trigger it
   if (alarm.name === 'check-again-tomorrow' || alarm.name === 'updated-settings') {
-    // TODO generalzie the grabbinof these things
     const selectedClass = await getFirstFieldFromStorage('selectedClass')
     const discordLink = await getFirstFieldFromStorage('discordChannel')
-    let emoteName
     if (retailClasses.find((className) => className === selectedClass)) {
       emoteName = await getFirstFieldFromStorage(selectedClass)
     }
     // Make sure we're trying to navigate to a discord link
-    if (emoteName !== '' && discordLink.includes('discord.com/channels/')) {
+    if (emoteName !== '' && discordLink.includes('discord.gg')) {
       createdTab = await chrome.tabs.create({
         active: false,
         url: discordLink
       })
     }
+  }
+})
+
+chrome.webNavigation.onCompleted.addListener(async (details) => {
+  if (createdTab && details.tabId === createdTab.id) {
+    // Immediately reset the createdTab so the listener is not triggered again
+    createdTab = null
+    chrome.scripting.executeScript({
+      target: { tabId: details.tabId },
+      args: [{ emoteName }],
+      /**
+       * Assigns the variables from args to self.
+       *
+       * @param {object} vars - The variables to assign to self
+       * @returns {object} - Returns the assigned object.
+       */
+      func: vars => Object.assign(self, vars)
+    }, function () {
+      chrome.scripting.executeScript({
+        target: { tabId: details.tabId },
+        files: ['./scripts/mal.js']
+      })
+    })
   }
 })
 
@@ -47,40 +67,6 @@ const getFirstFieldFromStorage = async (key) => {
     return keyValuePair
   })
   return Object.values(keyValuePair)[0]
-}
-
-/* chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-  console.log(changeInfo.url)
-  // TODO Add try catch or modify logic
-  if (tabId === createdTab.id && changeInfo.url) {
-    chrome.scripting.executeScript(
-      {
-        target: { tabId: createdTab.id },
-        files: ['./scripts/mal.js']
-
-      }
-    )
-  }
-}) */
-
-chrome.webNavigation.onCompleted.addListener(async (details) => {
-  if (createdTab && details.tabId === createdTab.id) {
-    // Immediately reset the createdTab so the listener is not triggered again
-    createdTab = null
-  }
-})
-
-/**
- *
- * @param message
- */
-async function justTestingFromMain (message) {
-  console.log(message)
-/*  createdTab = await chrome.tabs.create({
-    active: false,
-    url: navigateToUrl
-  }
-  ) */
 }
 
 /**

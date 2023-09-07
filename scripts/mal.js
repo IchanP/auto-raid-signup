@@ -1,3 +1,2 @@
-const aList = document.querySelector('a.fl-l')
-console.log(aList)
-aList.click()
+// eslint-disable-next-line no-undef
+console.log('config test' + self.emoteName)
