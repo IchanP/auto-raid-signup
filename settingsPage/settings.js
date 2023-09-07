@@ -10,7 +10,7 @@ discordLinkElement.value = savedLink.discordChannel
 const savedClass = await chrome.storage.local.get(['selectedClass']).then(result => result)
 classSelector.value = savedClass.selectedClass
 
-export const retailClasses = ['Warrior', 'Paladin', 'Hunter', 'Rogue', 'Priest', 'Shaman', 'Mage', 'Warlock', 'Monk', 'Druid', 'Demon Hunter', 'Death Knight', 'Evoker']
+const retailClasses = ['Warrior', 'Paladin', 'Hunter', 'Rogue', 'Priest', 'Shaman', 'Mage', 'Warlock', 'Monk', 'Druid', 'Demon Hunter', 'Death Knight', 'Evoker']
 
 const savedClassEmotes = await getSavedEmotes()
 
@@ -57,6 +57,9 @@ optionsForm.addEventListener('submit', (event) => {
     storageObject[nameOfClass] = inputElement.value
     chrome.storage.local.set(storageObject)
   }
+  chrome.alarms.create('updated-settings', {
+    when: Date.now() + 5000
+  })
 })
 
 /**
