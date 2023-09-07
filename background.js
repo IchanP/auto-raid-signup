@@ -17,24 +17,28 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
   chrome.alarms.create('check-again-tomorrow', {
     when: Date.now() + 57_600_000
   })
+  // If statement runs the script if alarm should trigger it
   if (alarm.name === 'check-again-tomorrow' || alarm.name === 'updated-settings') {
+    // TODO generalzie the grabbinof these things
     const selectedClass = await chrome.storage.local.get(['selectedClass']).then((selectedClass) => {
       console.log('Background.js: This is your selected class: ')
-      console.log(selectedClass)
-      return selectedClass
+      console.log(selectedClass.selectedClass)
+      return selectedClass.selectedClass
     })
     const discordLink = await chrome.storage.local.get(['discordChannel']).then((discordLink) => {
       console.log('Background.js: This is the set link: ')
       console.log(discordLink)
       return discordLink
     })
-    const demonHunter = await chrome.storage.local.get(['Demon Hunter']).then((demonHunter) => {
-      console.log('Background.js: This is DH:')
-      console.log(demonHunter)
-      return demonHunter
-    })
-  } else {
-    console.log('do not grab anything')
+    let emoteName
+    if (retailClasses.find((className) => className === selectedClass)) {
+      emoteName = await chrome.storage.local.get([selectedClass]).then((demonHunter) => {
+        console.log('Background.js: This is selected class:')
+        console.log(demonHunter)
+        return demonHunter
+      })
+    }
+    console.log(emoteName)
   }
 })
 
