@@ -23,7 +23,7 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
       emoteName = await getFirstFieldFromStorage(selectedClass)
     }
     // Make sure we're trying to navigate to a discord link
-    if (emoteName !== '' && discordLink.includes('discord.gg')) {
+    if (emoteName !== '' && discordLink.includes('discord.com/channels/')) {
       createdTab = await chrome.tabs.create({
         active: false,
         url: discordLink
@@ -40,16 +40,16 @@ chrome.webNavigation.onCompleted.addListener(async (details) => {
       target: { tabId: details.tabId },
       args: [{ emoteName }],
       /**
-       * Assigns the variables from args to self.
+       * Assigns the variables from args to self, to make them available inside the scripts file.
        *
        * @param {object} vars - The variables to assign to self
-       * @returns {object} - Returns the assigned object.
+       * @returns {object} - Returns the self object.
        */
       func: vars => Object.assign(self, vars)
     }, function () {
       chrome.scripting.executeScript({
         target: { tabId: details.tabId },
-        files: ['./scripts/mal.js']
+        files: ['./scripts/auto-sign.js']
       })
     })
   }
