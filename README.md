@@ -11,6 +11,7 @@
 - Grab settings into main ✅
 - Make sure the alarm is persistent ✅
 - Need a check to make sure that settings are saved before attempting sign-up ✅
+- Add token save for extensions.
 - Needs to remember if message has been reacted to already
 - Need array of previously reacted to message ids?
 
