@@ -56,3 +56,8 @@
     .wowClassInput {
       width: 50%;
     }
+
+    #discordLinKWrapper {
+      display: flex;
+      flex-direction: column;
+    }

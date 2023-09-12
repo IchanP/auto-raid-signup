@@ -3,8 +3,6 @@
   fromScript: 'hello from script'
 }) */
 
-console.log(document.readyState)
-
 const randId = [...crypto.getRandomValues(new Uint8Array(8))]
   .map((m) => ('0' + m.toString(16)).slice(-2))
   .join('')
@@ -57,6 +55,7 @@ const loginScript = (browserNode) => {
 const loginWithToken = () => {
   /**
    * Performs the login.
+   *
    * @param {string} token - The users login token.
    */
   function login (token) {

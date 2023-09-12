@@ -1,13 +1,26 @@
-const classSelector = document.querySelector('#classSelection')
+const classSelectorElement = document.querySelector('#classSelection')
 const discordLinkElement = document.querySelector('#discordLink')
 const optionsForm = document.querySelector('form')
+const tokenElement = document.querySelector('#discordToken')
 
-// Grab previous settings
-const savedLink = await chrome.storage.local.get(['discordChannel']).then((result) => result)
-discordLinkElement.value = savedLink.discordChannel
+/**
+ * Displays the previously saved setting if set to passed element.
+ *
+ * @param {string} storageName - The key to value to get from storage.
+ * @param {HTMLInputElement} inputElement - The input element to append to.
+ */
+async function displayPreviousSetting (storageName, inputElement) {
+  chrome.storage.local.get(storageName).then((result) => {
+    if (result[storageName]) {
+      inputElement.value = result[storageName]
+    }
+  })
+}
 
-const savedClass = await chrome.storage.local.get(['selectedClass']).then(result => result)
-classSelector.value = savedClass.selectedClass
+// Display all the previously set settings
+displayPreviousSetting('token', tokenElement)
+displayPreviousSetting('discordChannel', discordLinkElement)
+displayPreviousSetting('selectedClass', classSelectorElement)
 
 const retailClasses = ['Warrior', 'Paladin', 'Hunter', 'Rogue', 'Priest', 'Shaman', 'Mage', 'Warlock', 'Monk', 'Druid', 'Demon Hunter', 'Death Knight', 'Evoker']
 
@@ -44,7 +57,7 @@ optionsForm.addEventListener('submit', (event) => {
 
   // Set storage for discord link, selected class and the emotes on the server
   chrome.storage.local.set({
-    selectedClass: classSelector.value ? classSelector.value : null
+    selectedClass: classSelectorElement.value ? classSelectorElement.value : null
   })
   chrome.storage.local.set({
     discordChannel: discordLinkElement.value ? discordLinkElement.value : null
