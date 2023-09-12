@@ -9,7 +9,7 @@ const tokenElement = document.querySelector('#discordToken')
  * @param {string} storageName - The key to value to get from storage.
  * @param {HTMLInputElement} inputElement - The input element to append to.
  */
-async function displayPreviousSetting (storageName, inputElement) {
+function displayPreviousSetting (storageName, inputElement) {
   chrome.storage.local.get(storageName).then((result) => {
     if (result[storageName]) {
       inputElement.value = result[storageName]
@@ -61,6 +61,10 @@ optionsForm.addEventListener('submit', (event) => {
   })
   chrome.storage.local.set({
     discordChannel: discordLinkElement.value ? discordLinkElement.value : null
+  })
+
+  chrome.storage.local.set({
+    token: tokenElement.value ? tokenElement.value : null
   })
 
   for (const inputElement of classEmoteNames) {
