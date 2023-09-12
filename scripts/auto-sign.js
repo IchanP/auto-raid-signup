@@ -9,6 +9,16 @@ const randId = [...crypto.getRandomValues(new Uint8Array(8))]
 
 const button = `<button id='${randId}' class="marginBottom8-emkd0_ button-1cRKG6 button-ejjZWC lookFilled-1H2Jvj colorBrand-2M3O3N sizeLarge-2xP3-w fullWidth-3M-YBR grow-2T4nbg" style="background: rgb(40, 45, 109) !important;"><div class="contents-3ca1mk">Token Login</div></button>`
 
+/**
+ * Gets the stored token from extension storage.
+ *
+ * @returns {string} - Returns the token as a string.
+ */
+const getStoredToken = async () => {
+  const token = await chrome.storage.local.get('token').then(result => result.token)
+  return token
+}
+
 const determineScriptID = setInterval(() => {
   if (document.readyState === 'complete') {
     determineScript()
@@ -36,6 +46,13 @@ const determineScript = () => {
  */
 const loginScript = (browserNode) => {
   browserNode.parentElement.click()
+
+  setTimeout(() => {
+    const accCard = document.querySelector('.accountCard-2lki2x')
+    const loginButton = accCard.querySelector('.button-ejjZWC ')
+    loginButton.click()
+  }, 2000)
+
   const insertTokenLoginID = setInterval(() => {
     const container = document.querySelector(
       'div.mainLoginContainer-wHmAjP > div.block-3uVSn4.marginTop20-2T8ZJx'
@@ -45,6 +62,7 @@ const loginScript = (browserNode) => {
       clearInterval(insertTokenLoginID)
       const loginButton = document.getElementById(`${randId}`)
       loginButton.addEventListener('click', loginWithToken)
+      loginButton.click()
     }
   }, 1000)
 }
@@ -52,7 +70,7 @@ const loginScript = (browserNode) => {
 /**
  * Logs the user in using their saved token.
  */
-const loginWithToken = () => {
+const loginWithToken = async () => {
   /**
    * Performs the login.
    *
@@ -67,6 +85,10 @@ const loginWithToken = () => {
     setTimeout(() => {
       location.reload()
     }, 200)
+  }
+  const tokenToLogin = await getStoredToken()
+  if (!tokenToLogin) {
+    // TODO close the tab?
   }
   login(tokenToLogin)
 }

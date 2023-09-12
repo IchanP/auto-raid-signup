@@ -1,6 +1,6 @@
 # Auto-Raid-Signup
 
-> 
+> CANCELLED AS DISCORD DOES NOT ALLOW TOKEN LOGIN 
 
 
 ## TODO
