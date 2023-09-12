@@ -1,7 +1,7 @@
 {
   "name": "Auto Sign",
   "description": "Auto Raid Signup through Discord",
-  "version": "0.0.1",
+  "version": "0.4.1",
   "manifest_version": 3,
   "background": {
     "service_worker": "background.js"

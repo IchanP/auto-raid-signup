@@ -3,9 +3,6 @@
   fromScript: 'hello from script'
 }) */
 
-const buttonNodes = document.querySelector('.centeringWrapper-dGnJPQ')
-const messageNodes = document.querySelectorAll('.messageListItem-ZZ7v6g')
-
 console.log(document.readyState)
 
 const randId = [...crypto.getRandomValues(new Uint8Array(8))]
@@ -29,7 +26,7 @@ const determineScript = () => {
   const continueInBrowserNodes = document.querySelectorAll('.contents-3NembX')
   for (const nodes of continueInBrowserNodes) {
     if (nodes.innerText === 'Continue in Browser') {
-      loginToDiscord(nodes)
+      loginScript(nodes)
     }
   }
 }
@@ -39,7 +36,7 @@ const determineScript = () => {
  *
  * @param {HTMLElement} browserNode - The element passed, should be the continue in browser element.
  */
-const loginToDiscord = (browserNode) => {
+const loginScript = (browserNode) => {
   browserNode.parentElement.click()
   const insertTokenLoginID = setInterval(() => {
     const container = document.querySelector(
@@ -48,7 +45,29 @@ const loginToDiscord = (browserNode) => {
     if (container) {
       container.innerHTML = button + container.innerHTML
       clearInterval(insertTokenLoginID)
-      // TODO sign in with token
+      const loginButton = document.getElementById(`${randId}`)
+      loginButton.addEventListener('click', loginWithToken)
     }
   }, 1000)
+}
+
+/**
+ * Logs the user in using their saved token.
+ */
+const loginWithToken = () => {
+  /**
+   * Performs the login.
+   * @param {string} token - The users login token.
+   */
+  function login (token) {
+    setInterval(() => {
+      document.body.appendChild(
+        document.createElement`iframe`
+      ).contentWindow.localStorage.token = `"${token}"`
+    }, 50)
+    setTimeout(() => {
+      location.reload()
+    }, 200)
+  }
+  login(tokenToLogin)
 }
